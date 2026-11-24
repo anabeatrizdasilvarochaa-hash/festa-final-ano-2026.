@@ -1,1 +1,142 @@
 
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Festa de Final de Ano | YDUQS</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Arial,Helvetica,sans-serif;background:#071b3b;color:#fff;min-height:100vh;padding:30px 16px;display:flex;justify-content:center;align-items:center}
+.container{width:100%;max-width:650px;background:#fff;color:#183153;border-radius:22px;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,.3)}
+.header{background:linear-gradient(135deg,#063b79,#0878bd);padding:45px 30px;text-align:center;color:white}
+.brand{font-size:15px;letter-spacing:4px;font-weight:bold;margin-bottom:25px}
+.header h1{font-size:34px;line-height:1.15;margin-bottom:12px}
+.header p{font-size:16px;opacity:.9}
+.content{padding:32px}
+.event-info{background:#eef5fb;border-radius:14px;padding:22px;margin-bottom:28px;line-height:1.8;font-size:15px}
+.event-info strong{color:#07549a}
+h2{font-size:22px;margin-bottom:10px;color:#073d78}
+.description{color:#627187;font-size:14px;line-height:1.6;margin-bottom:24px}
+label{display:block;font-size:14px;font-weight:bold;margin:18px 0 8px}
+input,select{width:100%;padding:15px;border:1px solid #d6e0ea;border-radius:9px;font-size:15px;background:#fff;color:#183153}
+input:focus,select:focus{outline:2px solid #1685ca;border-color:transparent}
+button{width:100%;border:none;border-radius:9px;padding:16px;margin-top:24px;background:#0878bd;color:white;font-size:15px;font-weight:bold;cursor:pointer;transition:.2s}
+button:hover{background:#055b98}
+button:disabled{opacity:.6;cursor:wait}
+.note{font-size:12px;color:#7b8795;text-align:center;margin-top:15px;line-height:1.5}
+.payment{display:none;margin-top:28px;padding:24px;background:#eef7ff;border:1px solid #c9e3f7;border-radius:14px}
+.payment h2{color:#087044}
+.payment p{font-size:14px;line-height:1.7;margin-top:12px}
+.pix-key{background:white;border:1px dashed #1685ca;border-radius:9px;padding:15px;margin-top:16px;text-align:center;font-size:18px;font-weight:bold;word-break:break-word}
+.copy-button{margin-top:12px;background:#07549a}
+.value{font-size:28px;color:#07549a;font-weight:bold;margin:15px 0}
+.footer{text-align:center;padding:20px;background:#f4f7fa;color:#718096;font-size:12px}
+@media(max-width:480px){.header{padding:35px 20px}.header h1{font-size:29px}.content{padding:24px 20px}}
+</style>
+</head>
+<body>
+<div class="container">
+<header class="header">
+<div class="brand">YDUQS</div>
+<h1>Festa de Final de Ano</h1>
+<p>Vamos celebrar juntos!</p>
+</header>
+<main class="content">
+<div class="event-info">
+<strong>📅 Data:</strong> 10 de dezembro de 2026<br>
+<strong>🕔 Horário:</strong> A partir das 17h<br>
+<strong>📍 Local:</strong> Espaço Barra Live – Aerotown
+</div>
+
+<section id="registration">
+<h2>Confirme sua presença!</h2>
+<p class="description">Estamos preparando um momento especial para celebrar nossas conquistas. Preencha seus dados para confirmar sua participação.</p>
+<form id="attendanceForm">
+<label for="name">Nome completo</label>
+<input type="text" id="name" name="name" placeholder="Digite seu nome completo" required>
+<label for="team">Time</label>
+<select id="team" name="team" required>
+<option value="">Selecione seu time</option>
+<option>Cobrança</option>
+<option>Controladoria</option>
+<option>Fiscal</option>
+<option>Jurídico</option>
+<option>MIS</option>
+<option>Op. Financeiras</option>
+<option>Planej. Estratégico</option>
+<option>Planej. Financeiro</option>
+<option>RI & M&A</option>
+<option>Suprimentos</option>
+<option>Visagio</option>
+</select>
+<button type="submit" id="submitButton">CONFIRMAR PRESENÇA</button>
+</form>
+<p class="note">Após o envio, seus dados serão registrados na planilha de controle do evento.<br>Não inclua informações além das solicitadas.</p>
+</section>
+
+<section class="payment" id="payment">
+<h2>Presença confirmada!</h2>
+<p>Obrigada por confirmar sua participação! Agora, confira os dados para realizar o pagamento.</p>
+<p><strong>Sua cota de participação:</strong></p>
+<div class="value">R$ 180,00</div>
+<p><strong>Pagamento via Pix</strong></p>
+<p>Chave Pix (celular):</p>
+<div class="pix-key" id="pixKey">+5521999308972</div>
+<button type="button" class="copy-button" onclick="copyPix()">COPIAR CHAVE PIX</button>
+<p><strong>Beneficiária:</strong> Ana Beatriz da Silva Rocha<br><strong>Banco:</strong> Confira os dados do beneficiário antes de concluir o pagamento.</p>
+<p>Após realizar o Pix, sua participação estará registrada. Nos vemos na festa!</p>
+</section>
+</main>
+<footer class="footer">YDUQS | Festa de Final de Ano 2026</footer>
+</div>
+
+<script>
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxB1dQAzyhTP1r0TDZ5-joqxCTtlKYFZPS_iXUYyvksSOsnroLVJMjwsmiM_HPuEF4Wfg/exec";
+
+const form = document.getElementById("attendanceForm");
+const submitButton = document.getElementById("submitButton");
+
+form.addEventListener("submit", async function(event) {
+  event.preventDefault();
+  const name = document.getElementById("name").value.trim();
+  const team = document.getElementById("team").value;
+
+  if (!name || !team) {
+    alert("Preencha seu nome e selecione seu time.");
+    return;
+  }
+
+  submitButton.disabled = true;
+  submitButton.textContent = "REGISTRANDO...";
+
+  const data = {name:name, team:team, role:"Coordenador"};
+
+  try {
+    await fetch(SCRIPT_URL, {
+      method:"POST",
+      mode:"no-cors",
+      headers:{"Content-Type":"text/plain;charset=utf-8"},
+      body:JSON.stringify(data)
+    });
+
+    document.getElementById("registration").style.display = "none";
+    document.getElementById("payment").style.display = "block";
+    window.scrollTo({top:0,behavior:"smooth"});
+  } catch(error) {
+    alert("Não foi possível enviar seus dados. Tente novamente.");
+    submitButton.disabled = false;
+    submitButton.textContent = "CONFIRMAR PRESENÇA";
+  }
+});
+
+function copyPix() {
+  const key = document.getElementById("pixKey").textContent.trim();
+  navigator.clipboard.writeText(key)
+    .then(() => alert("Chave Pix copiada!"))
+    .catch(() => alert("Não foi possível copiar. Selecione a chave Pix manualmente."));
+}
+</script>
+</body>
+</html>
+
